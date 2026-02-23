@@ -12,54 +12,91 @@
         body {
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow: hidden;
             font-family: system-ui, -apple-system, sans-serif;
-            background: #0f172a;
+            background: transparent;
             color: #f1f5f9;
-        }
-
-        .wrapper {
-            height: 100%;
-            width: 100%;
-            position: relative;
+            scroll-behavior: smooth;
         }
 
         section {
-            position: absolute;
+            min-height: 100vh;
+            padding: 80px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0%;
+            z-index: 9999;
+            background: linear-gradient(90deg, #6cf, rgb(102, 105, 255));
+            box-shadow: 0 0 10px rgba(100, 200, 255, 0.7);
+            transition: width 0.1s linear;
+        }
+
+        #space {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            padding: 60px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-width: 900px;
-            margin: auto;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            transition: transform 0.7s ease, opacity 0.7s ease;
+            z-index: -1;
+            background: radial-gradient(circle at center, #0a0a1a 0%, #000 100%);
         }
 
-        /* начальное состояние */
-        section.hidden-down {
-            transform: translateY(100%);
+        h1,
+        h2 {
+            margin-bottom: 20px;
         }
 
-        section.hidden-up {
-            transform: translateY(-100%);
+        p {
+            margin-bottom: 16px;
+            line-height: 1.6;
         }
 
-        section.active {
-            transform: translateY(0);
-            opacity: 1;
-            z-index: 2;
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .day-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .speak-btn {
+            margin-left: 6px;
+            cursor: pointer;
+            border: none;
+            background: #334155;
+            color: white;
+            padding: 3px 6px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .speak-btn:hover {
+            background: #475569;
+        }
+
+        .lang-line {
+            margin-bottom: 10px;
         }
     </style>
 
 </head>
 
 <body>
+    <div class="scroll-progress"></div>
+
+
 
     <section>
         <h1>Почему в неделе семь дней?</h1>
@@ -72,28 +109,38 @@
             и соответствующему богу. Правда, поскольку их астрономия была геоцентрической, для стройной системы пришлось
             совместить несовместимое с помощью арифметики. Так появились планетарные часы.</p>
 
+        <h2>Планетарные часы</h2>
+
         <p>Античный мир знал семь «планет» — всё, что движется по небу иначе, чем звёзды:</p>
 
+        <p>Планеты разделяли по «скорости» движения по небу с точки зрения Земли: от самой медленной (Сатурн) к самой
+            быстрой (Луна). Отсортированный по скорости список планет называли <i>халдейским порядком</i>.</p>
+
+        <p>Древние астрологи делили сутки на 24 часа (привет от египтян). Каждый час управлялся одной из семи
+            планет. Планеты назначались по кругу, в халдейском порядке. Основное правило: планета, управляющая
+            первым часом дня, давала имя всему дню. Отсюда и название принципа - планетарные часы.</p>
+
+        <p>Так как 24%7 дает 3 в остатке, то из халдейского порядка брался каждый третий элемент списка. Так получился
+            список планет и богов который задал порядок дней в неделе.</p>
         <ul>
-            <li>Сатурн</li>
-            <li>Юпитер</li>
-            <li>Марс</li>
-            <li>Солнце</li>
-            <li>Венера</li>
-            <li>Меркурий</li>
-            <li>Луна</li>
+            <li>Воскресенье: Солнце</li>
+            <li>Понедельник: Луна</li>
+            <li>Вторник: Марс</li>
+            <li>Среда: Меркурий</li>
+            <li>Четверг: Юпитер</li>
+            <li>Пятница: Венера</li>
+            <li>Суббота: Сатурн</li>
         </ul>
-
-        <p>Это халдейский порядок — по скорости движения с точки зрения Земли: от самой медленной (Сатурн) к самой
-            быстрой (Луна).</p>
-
-        <p>Так как 24 % 7 даёт остаток 3, из халдейского порядка каждый день смещался на три позиции вперёд. Поэтому
-            планета первого часа давала имя всему дню.</p>
+        Сложная схема, но не какой-нибудь порядок нужен был и взяли его.
     </section>
 
 
     <section>
         <h2 class="day-title">Воскресенье — день Солнца</h2>
+
+        <p>Германские племена (англосаксы, предки немцев) на момент формирования названий дней недели были язычниками и
+            сохранили прямой перевод латинского dies Solis — Sun’s day / Sunday - день Солнца.
+        </p>
 
         <div class="lang-line">Латинский: <em>dies Solis</em>
             <button class="speak-btn" onclick="speak('dies Solis','la')">🔊</button>
@@ -103,6 +150,16 @@
             <button class="speak-btn" onclick="speak('Sunday','en-US')">🔊</button>
         </div>
 
+        <div class="lang-line">Немецкий: <em>Sonntag</em>
+            <button class="speak-btn" onclick="speak('Sonntag','de-DE')">🔊</button>
+        </div>
+
+        <p>
+            В то время как территория будущих Франции и Испании была глубоко романизирована и христианизирована, что
+            привело к замене «языческого» Солнца на «христианского» Господа в официальном языке (dies Dominica день
+            Господа)
+        </p>
+
         <div class="lang-line">Французский: <em>Dimanche</em>
             <button class="speak-btn" onclick="speak('Dimanche','fr-FR')">🔊</button>
         </div>
@@ -111,16 +168,16 @@
             <button class="speak-btn" onclick="speak('Domingo','es-ES')">🔊</button>
         </div>
 
-        <div class="lang-line">Немецкий: <em>Sonntag</em>
-            <button class="speak-btn" onclick="speak('Sonntag','de-DE')">🔊</button>
-        </div>
-
-        <p>Германские племена сохранили прямой перевод латинского названия. В романских странах языческое Солнце
-            заменили на «день Господа» — <em>dies Dominica</em>
-            <button class="speak-btn" onclick="speak('dies Dominica','la')">🔊</button>
+        <p>Старое русское название - <i>неделя</i> (день, когда <i>не делают</i>). А семидневка называлась
+            <i>седмица</i>. После
+            принятия христианства день Воскресения Христа - Воскресение. Идея что Христос это солнце, закреплялась и в
+            дне Рождества и тут.
         </p>
 
-        <p>Старое русское название — «неделя» (день, когда не делают). Семидневка называлась «седмица».</p>
+        <div class="lang-line">Русский: <em>Воскресенье</em>
+            <button class="speak-btn" onclick="speak('воскресенье','ru-RU')">🔊</button>
+        </div>
+
     </section>
 
 
@@ -131,23 +188,31 @@
             <button class="speak-btn" onclick="speak('dies Lunae','la')">🔊</button>
         </div>
 
-        <div class="lang-line">Английский: <em>Monday</em>
-            <button class="speak-btn" onclick="speak('Monday','en-US')">🔊</button>
+        <div class="lang-line">Испанский: <em>lunes</em>
+            <button class="speak-btn" onclick="speak('lunes','es-ES')">🔊</button>
         </div>
 
         <div class="lang-line">Французский: <em>lundi</em>
             <button class="speak-btn" onclick="speak('lundi','fr-FR')">🔊</button>
         </div>
 
-        <div class="lang-line">Испанский: <em>lunes</em>
-            <button class="speak-btn" onclick="speak('lunes','es-ES')">🔊</button>
+        <p>В германской традиции: латинское название Луны на Мани (Лунный бог), но произношение "день Луны" в разных
+            языках немного разное. </p>
+
+        <div class="lang-line">Английский: <em>Monday</em>
+            <button class="speak-btn" onclick="speak('Monday','en-US')">🔊</button>
         </div>
 
         <div class="lang-line">Немецкий: <em>Montag</em>
             <button class="speak-btn" onclick="speak('Montag','de-DE')">🔊</button>
         </div>
 
-        <p>В германской традиции римская Луна была соотнесена с богом Мани.</p>
+        <p>В русской традиции: Понедельник - день <i>после недели</i> , то есть после воскресенья</p>
+
+        <div class="lang-line">Русский: <em>Понедельник</em>
+            <button class="speak-btn" onclick="speak('Понедельник','ru-RU')">🔊</button>
+        </div>
+
     </section>
 
 
@@ -158,10 +223,6 @@
             <button class="speak-btn" onclick="speak('dies Martis','la')">🔊</button>
         </div>
 
-        <div class="lang-line">Английский: <em>Tuesday</em>
-            <button class="speak-btn" onclick="speak('Tuesday','en-US')">🔊</button>
-        </div>
-
         <div class="lang-line">Французский: <em>mardi</em>
             <button class="speak-btn" onclick="speak('mardi','fr-FR')">🔊</button>
         </div>
@@ -170,19 +231,27 @@
             <button class="speak-btn" onclick="speak('martes','es-ES')">🔊</button>
         </div>
 
-        <p>Римский Марс был заменён германским богом Тюром — одноруким богом воинской доблести.</p>
+        <p>В германской традиции: римский бог войны Марса был заменён — Тюром (или Тиу). Тюр в скандинавской мифологии —
+            однорукий бог воинской храбрости и справедливости</p>
+
+        <div class="lang-line">Английский: <em>Tuesday</em>
+            <button class="speak-btn" onclick="speak('Tuesday','en-US')">🔊</button>
+        </div>
+
+        <p>В русской традиции: Вторник - второй день</p>
+
+        <div class="lang-line">Русский: <em>Вторник</em>
+            <button class="speak-btn" onclick="speak('Вторник','ru-RU')">🔊</button>
+        </div>
+
     </section>
 
 
     <section>
-        <h2 class="day-title">Среда — день Меркурия</h2>
+        <h2 class="day-title">Среда — день Меркурия и Одина</h2>
 
         <div class="lang-line">Латинский: <em>dies Mercurii</em>
             <button class="speak-btn" onclick="speak('dies Mercurii','la')">🔊</button>
-        </div>
-
-        <div class="lang-line">Английский: <em>Wednesday</em>
-            <button class="speak-btn" onclick="speak('Wednesday','en-US')">🔊</button>
         </div>
 
         <div class="lang-line">Французский: <em>mercredi</em>
@@ -193,19 +262,25 @@
             <button class="speak-btn" onclick="speak('miércoles','es-ES')">🔊</button>
         </div>
 
-        <p>Меркурий в германской традиции был сопоставлен с Одином (Woden).</p>
+        <p>В германской традиции: Меркурий в германской традиции был сопоставлен с Одином (Woden)</p>
+
+        <div class="lang-line">Английский: <em>Wednesday</em>
+            <button class="speak-btn" onclick="speak('Wednesday','en-US')">🔊</button>
+        </div>
+
+        <p>В русской традиции: Cреда — середина</p>
+
+        <div class="lang-line">Русский: <em>Cреда</em>
+            <button class="speak-btn" onclick="speak('Cреда','ru-RU')">🔊</button>
+        </div>
     </section>
 
 
     <section>
-        <h2 class="day-title">Четверг — день Юпитера</h2>
+        <h2 class="day-title">Четверг — день Юпитера и Тора</h2>
 
         <div class="lang-line">Латинский: <em>dies Jovis</em>
             <button class="speak-btn" onclick="speak('dies Jovis','la')">🔊</button>
-        </div>
-
-        <div class="lang-line">Английский: <em>Thursday</em>
-            <button class="speak-btn" onclick="speak('Thursday','en-US')">🔊</button>
         </div>
 
         <div class="lang-line">Французский: <em>jeudi</em>
@@ -216,7 +291,17 @@
             <button class="speak-btn" onclick="speak('jueves','es-ES')">🔊</button>
         </div>
 
-        <p>Юпитер — бог-громовержец — был заменён Тором.</p>
+        <p>В германской традиции: поскольку Юпитер был громовержцем, выбрали Тора (в германской традиции — Тонара)</p>
+
+        <div class="lang-line">Английский: <em>Thursday</em>
+            <button class="speak-btn" onclick="speak('Thursday','en-US')">🔊</button>
+        </div>
+
+        <p>В русской традиции: Четверг — четвёртый</p>
+
+        <div class="lang-line">Русский: <em>Четверг</em>
+            <button class="speak-btn" onclick="speak('Четверг','ru-RU')">🔊</button>
+        </div>
     </section>
 
 
@@ -227,10 +312,6 @@
             <button class="speak-btn" onclick="speak('dies Veneris','la')">🔊</button>
         </div>
 
-        <div class="lang-line">Английский: <em>Friday</em>
-            <button class="speak-btn" onclick="speak('Friday','en-US')">🔊</button>
-        </div>
-
         <div class="lang-line">Французский: <em>vendredi</em>
             <button class="speak-btn" onclick="speak('vendredi','fr-FR')">🔊</button>
         </div>
@@ -239,12 +320,23 @@
             <button class="speak-btn" onclick="speak('viernes','es-ES')">🔊</button>
         </div>
 
-        <p>В германской традиции Венере соответствуют Фрейя или Фригг.</p>
+        <p>В германской традиции: Аналоги Венеры - Фрейя (богиня любви) или Фригг (жена Одина, покровительница
+            брака), это была одна или разные боги теперь понять сложно, обе подходят для замены Венеры.</p>
+
+        <div class="lang-line">Английский: <em>Friday</em>
+            <button class="speak-btn" onclick="speak('Friday','en-US')">🔊</button>
+        </div>
+
+        <p>В русской традиции: Пятница — пятая</p>
+
+        <div class="lang-line">Русский: <em>Пятница</em>
+            <button class="speak-btn" onclick="speak('Пятница','ru-RU')">🔊</button>
+        </div>
     </section>
 
 
     <section>
-        <h2 class="day-title">Суббота — день Сатурна</h2>
+        <h2 class="day-title">Суббота — день Сатурна и Шаббата</h2>
 
         <div class="lang-line">Латинский: <em>dies Saturni</em>
             <button class="speak-btn" onclick="speak('dies Saturni','la')">🔊</button>
@@ -254,93 +346,135 @@
             <button class="speak-btn" onclick="speak('Saturday','en-US')">🔊</button>
         </div>
 
+        <p>Во многих европейских языках название происходит от древнееврейского «шаббат». Суббота почти во всех
+            европейских языках произошла от древнееврейского шаббат. С тех пор как христианство стало официальной
+            религией римской империи, 7-дневная неделя стала стандартом по всей римской империи и так же как
+            воскресеньем, за субботой закрепилось христианское название.</p>
+
+        <div class="lang-line">Французский: <em>Samedi</em> (через народную латынь _sabbati dies_)
+            <button class="speak-btn" onclick="speak('Samedi','fr-FR')">🔊</button>
+        </div>
+
         <div class="lang-line">Испанский: <em>sábado</em>
             <button class="speak-btn" onclick="speak('sábado','es-ES')">🔊</button>
         </div>
 
-        <div class="lang-line">Немецкий: <em>Samstag</em>
+        <div class="lang-line">Немецкий: <em>Samstag</em>(тоже от названия шаббата)
             <button class="speak-btn" onclick="speak('Samstag','de-DE')">🔊</button>
         </div>
 
-        <p>Во многих европейских языках название происходит от древнееврейского «шаббат».</p>
+        <p>В русской традиции: Суббота тоже происходит от шаббата. Название попало через греческий и церковнославянский,
+            поэтому произношение исказилось. Суббота и воскресенье были днем богослужения, поэтому их названия стали не
+            номерными.</p>
 
-        <p>7 марта 321 года император Константин Великий объявил воскресенье официальным днём отдыха в Римской империи.
-        </p>
+        <div class="lang-line">Русский: <em>Суббота</em>
+            <button class="speak-btn" onclick="speak('Суббота','ru-RU')">🔊</button>
+        </div>
+
     </section>
 
+    <section>
+        <h2>А почему день начала недели различается?</h2>
+        <p>И снова борьба разных христианских религий. На этот раз иудаизм и христианство во времена римской империи.
+            Изначальный выходной в иудаизме - <i>суббота</i>. Согласно Библии, Бог творил мир шесть дней, а на седьмой
+            (<i>шаббат</i> — суббота) отдыхал. Но по мере того как христианство отделялось от иудаизма они решили
+            сделать все по своему и выбрали для выходного воскресенье. </p>
+
+        <p>Что бы их объединить 7 марта 321 года римский император Константин Великий издал эдикт, провозгласивший
+            воскресенье официальным днем отдыха во всей империи. Это распоряжение сделало воскресенье
+            государственным выходным на тысячи лет вперед для всей европейской цивилизации. Для всей кроме еврейской,
+            которые по прежнему хотели отдыхать в субботу.</p>
+        <p>Своих прав еврей смогли добиться только в 20 веке, когда стало понятно что при пятидневке рабочие работают
+            продуктивнее и тратят больше (привет от капитализма). Правда выходные разбросанные в начале и в конце неделе
+            были не удобны для учета, поэтому когда начали стандартизировать календари выходные смогли объединить в одни
+            блок. </p>
+        <p>
+            Правда не во всех странах. В странах с сильной протестантской традицией(США) воскресенье до сих пор первый
+            день недели. </p>
+    </section>
+
+    <canvas id="space"></canvas>
 
     <script>
         const sections = document.querySelectorAll("section");
-        let current = 0;
-        let isAnimating = false;
+        const progressBar = document.querySelector('.scroll-progress');
 
-        sections.forEach((sec, i) => {
-            if (i === 0) {
-                sec.classList.add("active");
-            } else {
-                sec.classList.add("hidden-down");
-            }
-        });
+        let currentIndex = 0;
+        let isTransitioning = false;
+        let overscroll = 0;
+        const threshold = 120;
 
-        function showSection(index, direction) {
-            if (index < 0 || index >= sections.length || isAnimating) return;
-
-            isAnimating = true;
-
-            const currentSection = sections[current];
-            const nextSection = sections[index];
-
-            // Убираем старые состояния
-            nextSection.classList.remove("hidden-down", "hidden-up");
-
-            if (direction === "down") {
-                nextSection.classList.add("hidden-down");
-                requestAnimationFrame(() => {
-                    currentSection.classList.remove("active");
-                    currentSection.classList.add("hidden-up");
-                    nextSection.classList.remove("hidden-down");
-                    nextSection.classList.add("active");
-                });
-            }
-
-            if (direction === "up") {
-                nextSection.classList.add("hidden-up");
-                requestAnimationFrame(() => {
-                    currentSection.classList.remove("active");
-                    currentSection.classList.add("hidden-down");
-                    nextSection.classList.remove("hidden-up");
-                    nextSection.classList.add("active");
-                });
-            }
-
-            current = index;
-
+        function goToSection(index) {
+            if (index < 0 || index >= sections.length) return;
+            isTransitioning = true;
+            currentIndex = index;
+            sections[index].scrollIntoView({ behavior: "smooth" });
             setTimeout(() => {
-                isAnimating = false;
-            }, 700);
+                isTransitioning = false;
+                overscroll = 0;
+            }, 800);
         }
 
         window.addEventListener("wheel", (e) => {
+            if (isTransitioning) return;
+
+            const section = sections[currentIndex];
+            const rect = section.getBoundingClientRect();
+
+            const atBottom = rect.bottom <= window.innerHeight + 1;
+            const atTop = rect.top >= -1;
+
             if (e.deltaY > 0) {
-                showSection(current + 1, "down");
+                if (atBottom) {
+                    overscroll += e.deltaY;
+                    if (overscroll > threshold) {
+                        goToSection(currentIndex + 1);
+                    }
+                } else {
+                    overscroll = 0;
+                }
             } else {
-                showSection(current - 1, "up");
+                if (atTop) {
+                    overscroll += -e.deltaY;
+                    if (overscroll > threshold) {
+                        goToSection(currentIndex - 1);
+                    }
+                } else {
+                    overscroll = 0;
+                }
             }
         });
 
-        let startY = 0;
+        // Touch
+
+        let touchStartY = 0;
 
         window.addEventListener("touchstart", (e) => {
-            startY = e.touches[0].clientY;
+            touchStartY = e.touches[0].clientY;
         });
 
-        window.addEventListener("touchend", (e) => {
-            let endY = e.changedTouches[0].clientY;
+        window.addEventListener("touchmove", (e) => {
+            if (isTransitioning) return;
 
-            if (startY - endY > 50) {
-                showSection(current + 1, "down");
-            } else if (endY - startY > 50) {
-                showSection(current - 1, "up");
+            const touchCurrentY = e.touches[0].clientY;
+            const delta = touchStartY - touchCurrentY;
+
+            const section = sections[currentIndex];
+            const rect = section.getBoundingClientRect();
+
+            const atBottom = rect.bottom <= window.innerHeight + 1;
+            const atTop = rect.top >= -1;
+
+            if (delta > 0 && atBottom) {
+                overscroll += delta;
+                if (overscroll > threshold) {
+                    goToSection(currentIndex + 1);
+                }
+            } else if (delta < 0 && atTop) {
+                overscroll += -delta;
+                if (overscroll > threshold) {
+                    goToSection(currentIndex - 1);
+                }
             }
         });
 
@@ -349,6 +483,61 @@
             utterance.lang = lang;
             speechSynthesis.speak(utterance);
         }
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+    </script>
+
+    <script>
+        const canvas = document.getElementById('space');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let stars = [];
+
+        for (let i = 0; i < 200; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                speed: Math.random() * 0.3
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "white";
+
+            stars.forEach(star => {
+                star.y += star.speed;
+
+                if (star.y > canvas.height) {
+                    star.y = 0;
+                    star.x = Math.random() * canvas.width;
+                }
+
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 
 </body>
