@@ -38,18 +38,22 @@
             left: 0;
             top: 0;
             opacity: 0;
-            transform: translateY(100%);
             transition: transform 0.7s ease, opacity 0.7s ease;
         }
 
-        section.active {
-            opacity: 1;
-            transform: translateY(0);
-            z-index: 1;
+        /* начальное состояние */
+        section.hidden-down {
+            transform: translateY(100%);
         }
 
-        section.prev {
+        section.hidden-up {
             transform: translateY(-100%);
+        }
+
+        section.active {
+            transform: translateY(0);
+            opacity: 1;
+            z-index: 2;
         }
     </style>
 
@@ -270,36 +274,57 @@
         let current = 0;
         let isAnimating = false;
 
-        function showSection(index) {
+        sections.forEach((sec, i) => {
+            if (i === 0) {
+                sec.classList.add("active");
+            } else {
+                sec.classList.add("hidden-down");
+            }
+        });
+
+        function showSection(index, direction) {
             if (index < 0 || index >= sections.length || isAnimating) return;
 
             isAnimating = true;
 
-            sections[current].classList.remove("active");
-            sections[current].classList.add("prev");
+            const currentSection = sections[current];
+            const nextSection = sections[index];
+
+            // Убираем старые состояния
+            nextSection.classList.remove("hidden-down", "hidden-up");
+
+            if (direction === "down") {
+                nextSection.classList.add("hidden-down");
+                requestAnimationFrame(() => {
+                    currentSection.classList.remove("active");
+                    currentSection.classList.add("hidden-up");
+                    nextSection.classList.remove("hidden-down");
+                    nextSection.classList.add("active");
+                });
+            }
+
+            if (direction === "up") {
+                nextSection.classList.add("hidden-up");
+                requestAnimationFrame(() => {
+                    currentSection.classList.remove("active");
+                    currentSection.classList.add("hidden-down");
+                    nextSection.classList.remove("hidden-up");
+                    nextSection.classList.add("active");
+                });
+            }
 
             current = index;
 
-            sections[current].classList.add("active");
-
             setTimeout(() => {
-                sections.forEach((sec, i) => {
-                    if (i !== current) {
-                        sec.classList.remove("active");
-                        sec.classList.remove("prev");
-                    }
-                });
                 isAnimating = false;
             }, 700);
         }
 
-        sections[0].classList.add("active");
-
         window.addEventListener("wheel", (e) => {
             if (e.deltaY > 0) {
-                showSection(current + 1);
+                showSection(current + 1, "down");
             } else {
-                showSection(current - 1);
+                showSection(current - 1, "up");
             }
         });
 
@@ -311,10 +336,11 @@
 
         window.addEventListener("touchend", (e) => {
             let endY = e.changedTouches[0].clientY;
+
             if (startY - endY > 50) {
-                showSection(current + 1);
+                showSection(current + 1, "down");
             } else if (endY - startY > 50) {
-                showSection(current - 1);
+                showSection(current - 1, "up");
             }
         });
 
